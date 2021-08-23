@@ -6,17 +6,21 @@ def PT(TLV):
 
 # Debemos buscar los dos muones de mayor p_T que satisfagan la condición de corte. 
 # mu_list es una lista ordenada descendentemente según los p_T de los muones.
-# TODO: ¿En que unidades esta? MeV?
+# Con este código, me estoy evitando comparaciones dobles y solo hago O(n). 
 def cut(mu_list, pt_cut=20, delta_R=0.3):
   flag = True
-  i = 1
+  i, j = 0, 1
   mu1, mu2 = None, None
   while flag and i < len(mu_list):
-    mu1, mu2 = mu_list[i-1], mu_list[i]
-    if mu1.Pt() > pt_cut and mu2.Pt() > pt_cut and mu1.DeltaR(mu2) > 0.3:
+    mu1, mu2 = mu_list[i], mu_list[j]
+    if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > 0.3:
       flag = False
     else:
-      i += 1
+      if j == len(mu_list) - 1 and i < len(mu_list): 
+        i += 1
+        j = i + 1
+      else:
+        j += 1
   return mu1, mu2
 
 
