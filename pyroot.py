@@ -8,20 +8,22 @@ def PT(TLV):
 # mu_list es una lista ordenada descendentemente según los p_T de los muones.
 # Con este código, me estoy evitando comparaciones dobles y solo hago O(n). 
 def cut(mu_list, pt_cut=20, delta_R=0.3):
-  flag = True
   i, j = 0, 1
   mu1, mu2 = None, None
-  while flag and i < len(mu_list):
+  mu_cut = []
+  cut = False
+  while i < len(mu_list):
     mu1, mu2 = mu_list[i], mu_list[j]
     if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > 0.3:
-      flag = False
+      cut = True
+      mu_cut.append((mu1, mu2))
     else:
       if j == len(mu_list) - 1 and i < len(mu_list): 
         i += 1
         j = i + 1
       else:
         j += 1
-  return mu1, mu2
+  return mu_cut, cut
 
 
 
@@ -98,7 +100,10 @@ for n_signal, signal in enumerate(signals):
             muons.sort(reverse = True, key=PT)
             j1, j2 = jets[0], jets[1]
             # Tomamos los dos muones de mayor p_T que satisfagan el corte. Cada uno es un TLorentzVector
-            mu1, mu2 = cut(muons)
+            muons_cut, cut = cut(muons)
+            # Esto me da la pareja de muones de mayor p_T que además cumplen el Delta_R.
+            leading_pair = muons_cut[0]
+            mu1, mu2 = leading_pair[0], leading_pair[1]
             # Hacemos la gráfica de p_T de los dos muones de mayor p_T
             plot_PT_mu1.Fill(mu1.Pt())
             plot_PT_mu2.Fill(mu2.Pt())
