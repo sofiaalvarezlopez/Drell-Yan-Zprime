@@ -4,23 +4,10 @@ from ROOT import TLorentzVector, TH1F
 def PT(TLV):
     return TLV.Pt()
 
-# Debemos buscar los muones de mayor p_T que satisfagan la condición de corte. 
+# Debemos buscar los dos muones de mayor p_T que satisfagan la condición de corte. 
 # mu_list es una lista ordenada descendentemente según los p_T de los muones.
-# Retornamos todos los muones que satisfacen las condiciones. 
-# Note que la primera pareja sera la de mayor p_T y delta_R según el cut.
+# Con este código, me estoy evitando comparaciones dobles y solo hago O(n). 
 def cut(mu_list, pt_cut=20, delta_R=0.3):
-  mu_cut = []
-  cut = False
-  for i, mu_1 in enumerate(mu_list):
-    for j, mu_2 in enumerate(mu_list):
-      if j > i: 
-        if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > 0.3:
-          cut = True
-          mu_cut.append((mu_1, mu_2))
-  return mu_cut, cut 
-
-
-
   i, j = 0, 1
   mu1, mu2 = None, None
   mu_cut = []
@@ -115,7 +102,7 @@ for n_signal, signal in enumerate(signals):
         mu1, mu2 = muons[0], muons[1]
         # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
         # Si es estrictamente la pareja de mayor pT, paso muons ordenada. Si no, puede estar desordenada y cogemos la primera
-        # pareja que satisfaga la condición
+        # pareja que satisfaga la condición de corte. 
         muons_cut, cut = cut(muons)
         # Esto me da la pareja de muones de mayor p_T que además cumplen el Delta_R.
         leading_pair = muons_cut[0]
