@@ -8,13 +8,15 @@ def PT(TLV):
 # mu_list es una lista ordenada descendentemente según los p_T de los muones.
 # Retornamos todos los muones que satisfacen las condiciones. 
 # Note que la primera pareja sera la de mayor p_T y delta_R según el cut.
+# Queremos dos muones de carga opuesta. Entonces, la multiplicación de sus cargas debe ser menor a 0.
+# Cargas en pyroot: https://twiki.cern.ch/twiki/bin/view/CMSPublic/PyRoot
 def cut(mu_list, pt_cut=20, delta_R=0.3):
   mu_cut = []
   cut = False
   for i, mu_1 in enumerate(mu_list):
     for j, mu_2 in enumerate(mu_list):
       if j > i: 
-        if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > 0.3:
+        if mu_1.Pt() >= pt_cut and mu_2.Pt() >= pt_cut and mu_1.DeltaR(mu_2) > delta_R and mu_1.charge()*mu_2.charge() < 0:
           cut = True
           mu_cut.append((mu_1, mu_2))
   return mu_cut, cut 
@@ -137,8 +139,8 @@ for n_signal, signal in enumerate(signals):
             plot_PHI_muons.Fill(muon.Pt())
 
         #MET
-        for MET in METs:
-            plot_MET.Fill(MET.Pt())
+        #for MET in METs:
+            #plot_MET.Fill(MET.Pt())
 
 
 

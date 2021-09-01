@@ -5,8 +5,10 @@ def PT(TLV):
     return TLV.Pt()
 
 # Debemos buscar los dos muones de mayor p_T que satisfagan la condición de corte. 
-# mu_list es una lista ordenada descendentemente según los p_T de los muones.
-# Con este código, me estoy evitando comparaciones dobles y solo hago O(n). 
+# mu_list es una lista ordenada descendentemente según los p_T de los muones.
+# Con este código, me estoy evitando comparaciones dobles y solo hago O(n).
+# Queremos dos muones de carga opuesta. Entonces, la multiplicación de sus cargas debe ser menor a 0.
+
 def cut(mu_list, pt_cut=20, delta_R=0.3):
   i, j = 0, 1
   mu1, mu2 = None, None
@@ -14,7 +16,7 @@ def cut(mu_list, pt_cut=20, delta_R=0.3):
   cut = False
   while i < len(mu_list):
     mu1, mu2 = mu_list[i], mu_list[j]
-    if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > 0.3:
+    if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > delta_R and mu1.charge()*mu2.charge() < 0:
       cut = True
       mu_cut.append((mu1, mu2))
     else:
@@ -124,8 +126,8 @@ for n_signal, signal in enumerate(signals):
             plot_PHI_muons.Fill(muon.Pt())
 
         #MET
-        for MET in METs:
-            plot_MET.Fill(MET.Pt())
+       # for MET in METs:
+            #plot_MET.Fill(MET.Pt())
 
 
 
