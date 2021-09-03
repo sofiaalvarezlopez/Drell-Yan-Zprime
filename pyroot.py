@@ -16,7 +16,7 @@ def cut(mu_list, pt_cut=20, delta_R=0.3):
   for i, mu_1 in enumerate(mu_list):
     for j, mu_2 in enumerate(mu_list):
       if j > i: 
-        if mu_1.Pt() >= pt_cut and mu_2.Pt() >= pt_cut and mu_1.DeltaR(mu_2) > delta_R and mu_1.charge()*mu_2.charge() < 0:
+        if mu_1.Pt() >= pt_cut and mu_2.Pt() >= pt_cut and mu_1.DeltaR(mu_2) > delta_R:
           cut = True
           mu_cut.append((mu_1, mu_2))
   return mu_cut, cut 

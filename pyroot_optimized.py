@@ -16,7 +16,7 @@ def cut(mu_list, pt_cut=20, delta_R=0.3):
   cut = False
   while i < len(mu_list):
     mu1, mu2 = mu_list[i], mu_list[j]
-    if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > delta_R and mu1.charge()*mu2.charge() < 0:
+    if mu1.Pt() >= pt_cut and mu2.Pt() >= pt_cut and mu1.DeltaR(mu2) > delta_R:
       cut = True
       mu_cut.append((mu1, mu2))
     else:
