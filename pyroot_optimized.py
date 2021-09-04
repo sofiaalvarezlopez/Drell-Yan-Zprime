@@ -95,7 +95,7 @@ for n_signal, signal in enumerate(signals):
       leptons = electrons + muons
 
 
-      if (len(jets) >= 2 and len(leptons) != 0):
+      if len(leptons) != 0:
 
         jets.sort(reverse = True, key=PT)
         muons.sort(reverse = True, key=PT)
