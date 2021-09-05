@@ -26,7 +26,6 @@ def cuts(mu_list, pt_cut=20, delta_R=0.3):
     return mu_cut, cut
 
 
-# Esto todavía no lo cambio, depende de la señal que me den.
 signals = ["DY+jets"]
 jobs = [1]
 
