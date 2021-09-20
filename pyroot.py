@@ -53,7 +53,7 @@ for n_signal, signal in enumerate(signals):
 
     for ind in range(1, jobs[n_signal] + 1):
         directory = str(
-            "../Sofia/" + signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
+            signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
         File = ROOT.TChain("Delphes;1")
         File.Add(directory)
         Number = File.GetEntries()
