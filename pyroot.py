@@ -1,4 +1,5 @@
 import ROOT
+import numpy as np
 from ROOT import TLorentzVector, TH1F
 
 
@@ -142,7 +143,7 @@ for n_signal, signal in enumerate(signals):
                 for muon in muons:
                     plot_ETA_muons.Fill(muon[1].Eta())
                     plot_PHI_muons.Fill(muon[1].Phi())
-                    plot_Cos_Delta_PHI_muons.Fill(ROOT.TMath.cos(muon[1].Phi()))
+                    plot_Cos_Delta_PHI_muons.Fill(np.cos(muon[1].Phi()))
 
                 # Hacemos la gráfica de la carga de los muones
                 charge = muons[0][0] * muons[1][0]
@@ -158,7 +159,7 @@ for n_signal, signal in enumerate(signals):
 
                 # Cogemos el PHI del MET
                 phi_met = MET[0].Phi()
-                plot_cos_Delta_PHI_MET_muon_lead.Fill(ROOT.TMath.cos(phi_met - mu1.Pt()))
+                plot_cos_Delta_PHI_MET_muon_lead.Fill(np.cos(phi_met - mu1.Pt()))
 
 
 
