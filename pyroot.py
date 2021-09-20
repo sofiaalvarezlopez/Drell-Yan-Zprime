@@ -28,7 +28,7 @@ def cuts(mu_list, pt_cut=20, delta_R=0.3):
     return mu_cut, cut
 
 
-signals = ["../DY+jets"]
+signals = ["DY+jets"]
 jobs = [1]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
@@ -45,7 +45,7 @@ plot_Cos_Delta_PHI_muons = TH1F("Cos_DELTA_PHI muons", "Cos_DELTA_PHI muons", 10
 plot_MET = TH1F("MET", "MET", 100, 0.0, 1000.0)
 plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
 plot_cos_Delta_PHI_MET_muon_lead = TH1F("Cos_DELTA_PHI MET v. Muon lead", "Cos_DELTA_PHI MET v. Muon lead", 100, -1.0, 1.0)
-plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, -1.0, 1.0)
+plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, 0.0, 1000)
 
 for n_signal, signal in enumerate(signals):
 
@@ -53,7 +53,7 @@ for n_signal, signal in enumerate(signals):
 
     for ind in range(1, jobs[n_signal] + 1):
         directory = str(
-            signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
+            "../" + signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
         File = ROOT.TChain("Delphes;1")
         File.Add(directory)
         Number = File.GetEntries()
