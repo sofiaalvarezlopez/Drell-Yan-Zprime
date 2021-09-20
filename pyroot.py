@@ -29,8 +29,10 @@ def cuts(mu_list, pt_cut=20, delta_R=0.3):
     return mu_cut, cut
 
 
-signals = ["DY+jets"]
-jobs = [1]
+signals = ["w+jets", "ttbar", "ww", "wz", "zz", "DY+jets"]
+ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/",
+       "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/"]
+jobs = [1,1,1,1,1,1]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
@@ -53,7 +55,7 @@ for n_signal, signal in enumerate(signals):
 
     for ind in range(1, jobs[n_signal] + 1):
         directory = str(
-            "../" + signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
+            ext[n_signal] + signal + "/" + signal + "_" + str(ind) + "/Events/run_01/tag_1_delphes_events.root")
         File = ROOT.TChain("Delphes;1")
         File.Add(directory)
         Number = File.GetEntries()
