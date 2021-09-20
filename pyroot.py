@@ -115,18 +115,18 @@ for n_signal, signal in enumerate(signals):
                 # Si es estrictamente la pareja de mayor pT, paso muons ordenada. Si no, puede estar desordenada y cogemos la primera
                 # pareja que satisfaga la condición
                 # Le paso únicamente muons[2] porque es la lista de muones
-                muons_cut, cut = cuts(muons[1])
+                # muons_cut, cut = cuts(muons[1])
                 # Esto me da la pareja de muones de mayor p_T que además cumplen el Delta_R.
 
-                if (cut):
-                    leading_pair = muons_cut[0]
+                # if (cut):
+                  #  leading_pair = muons_cut[0]
                     # Cogemos los dos muones que satisfacen el corte
-                    mu1_cut, mu2_cut = leading_pair[0], leading_pair[1]
+                   # mu1_cut, mu2_cut = leading_pair[0], leading_pair[1]
 
                 ############################# HISTOS ###########################
-                if (cut):
+                #if (cut):
                     # Hacemos la grafica de Delta_R de los dos muones con mayor pT y Delta_R > 0.3
-                    plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
+                 #   plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
 
                 # Hacemos la gráfica de p_T de los dos muones de mayor p_T
                 plot_PT_mu1.Fill(mu1.Pt())
