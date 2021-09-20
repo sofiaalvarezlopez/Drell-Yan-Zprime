@@ -183,8 +183,8 @@ for n_signal, signal in enumerate(signals):
 
 
     x_axis_muons_charge = plot_charge_muons.GetXaxis()
-    x_axis_muons_charge.SetBinLabel(-1, 'OS')
-    x_axis_muons_charge.SetBinLabel(1, 'SS')
+    x_axis_muons_charge.SetBinLabel(1, 'OS')
+    x_axis_muons_charge.SetBinLabel(2, 'SS')
     plot_charge_muons.Draw("HIST")
 
     plot_PT_leptons.Write()
