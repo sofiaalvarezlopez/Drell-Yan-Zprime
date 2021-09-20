@@ -92,7 +92,7 @@ for n_signal, signal in enumerate(signals):
                 muon_PT, muon_Eta, muon_Phi, muon_M, muon_charge = File.GetLeaf("Muon.PT").GetValue(j), File.GetLeaf(
                     "Muon.Eta").GetValue(j), File.GetLeaf("Muon.Phi").GetValue(j), 0.1056583755, File.GetLeaf("Muon.Charge").GetValue(j)
                 muon.SetPtEtaPhiM(muon_PT, muon_Eta, muon_Phi, muon_M)
-                muons.append(muon_charge, muon)
+                muons.append((muon_charge, muon))
 
             EntryFromBranch_MET = File.MissingET.GetEntries()
             for j in range(EntryFromBranch_MET):
