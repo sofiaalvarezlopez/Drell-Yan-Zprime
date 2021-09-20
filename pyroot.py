@@ -140,22 +140,18 @@ for n_signal, signal in enumerate(signals):
                 plot_mRec_mu1_mu2.Fill(mu_total.M())
                 # Hacemos la gráfica de masa reconstruida de mu_total.
                 for muon in muons:
-                    plot_ETA_muons.Fill(muon.Eta())
-                    plot_PHI_muons.Fill(muon.Phi())
-                    plot_Cos_Delta_PHI_muons.Fill(ROOT.TMath.cos(muon.Phi()))
+                    plot_ETA_muons.Fill(muon[1].Eta())
+                    plot_PHI_muons.Fill(muon[1].Phi())
+                    plot_Cos_Delta_PHI_muons.Fill(ROOT.TMath.cos(muon[1].Phi()))
 
                 # Hacemos la gráfica de la carga de los muones
-                charge = mu1.Charge() * mu2.Charge()
+                charge = muons[0][0] * muons[1][0]
                 if charge < 0: plot_charge_muons.Fill(-1)
                 else: plot_charge_muons.Fill(1)
 
                 # MET
                 for MET in METs:
                     plot_MET.Fill(MET.Pt())
-
-                # Cogemos la masa transversa del muón de más alto Pt
-                Mt_mu_lead = muons[0][0]
-                # Cogemos la masa transversa del MET
 
                 plot_transverse_mass.Fill((METs[0] + mu1).Mt())
 
