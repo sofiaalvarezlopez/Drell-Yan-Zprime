@@ -158,7 +158,7 @@ for n_signal, signal in enumerate(signals):
 
 
                 # Cogemos el PHI del MET
-                phi_met = MET[0].Phi()
+                phi_met = METs[0].Phi()
                 plot_cos_Delta_PHI_MET_muon_lead.Fill(np.cos(phi_met - mu1.Pt()))
 
 
