@@ -110,7 +110,7 @@ for n_signal, signal in enumerate(signals):
                 muons.sort(reverse=True, key=muon_filter)
                 # j1, j2 = jets[0], jets[1]
                 # Estos son los dos muones de mayor pT.
-                mu1, mu2 = muons[1][0], muons[1][1]
+                mu1, mu2 = muons[0][1], muons[1][1]
                 # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
                 # Si es estrictamente la pareja de mayor pT, paso muons ordenada. Si no, puede estar desordenada y cogemos la primera
                 # pareja que satisfaga la condición
