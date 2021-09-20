@@ -2,16 +2,18 @@ import ROOT
 from ROOT import TLorentzVector, TH1F
 
 
+
 def PT(TLV):
     return TLV.Pt()
+
+def muon_filter(muon):
+    return muon[2].Pt()
 
 
 # Debemos buscar los muones de mayor p_T que satisfagan la condición de corte.
 # mu_list es una lista ordenada descendentemente según los p_T de los muones.
 # Retornamos todos los muones que satisfacen las condiciones.
 # Note que la primera pareja sera la de mayor p_T y delta_R según el cut.
-# Queremos dos muones de carga opuesta. Entonces, la multiplicación de sus cargas debe ser menor a 0.
-# Cargas en pyroot: https://twiki.cern.ch/twiki/bin/view/CMSPublic/PyRoot
 def cuts(mu_list, pt_cut=20, delta_R=0.3):
     global mu_cut
     global cut
@@ -38,6 +40,13 @@ plot_PHI_muons = TH1F("PHI_muons", "PHI_muons", 100, -8.0, 8.0)
 plot_Delta_R_mu1_mu2 = TH1F("DELTA_R muons", "DELTA_R muons", 100, 0, 10.0)
 plot_mRec_mu1_mu2 = TH1F("M_REC muons", "M_REC muons", 100, 0, 100.0)
 
+plot_Delta_PHI_muons = TH1F("DELTA_PHI muons", "DELTA_PHI muons", 100, -8.0, 8.0)
+plot_Cos_Delta_PHI_muons = TH1F("Cos_DELTA_PHI muons", "Cos_DELTA_PHI muons", 100, -1.0, 1.0)
+plot_MET = TH1F("MET", "MET", 100, 0.0, 1000.0)
+plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
+plot_cos_Delta_PHI_MET_muon_lead = TH1F("Cos_DELTA_PHI MET v. Muon lead", "Cos_DELTA_PHI MET v. Muon lead", 100, -1.0, 1.0)
+plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, -1.0, 1.0)
+
 for n_signal, signal in enumerate(signals):
 
     f = ROOT.TFile(signal + ".root", "recreate")
@@ -60,6 +69,7 @@ for n_signal, signal in enumerate(signals):
             muons = []
             leptons = []
             METs = []
+            transverse_mass_METs = []
 
             EntryFromBranch_j = File.Jet.GetEntries()
             for j in range(EntryFromBranch_j):
@@ -80,17 +90,19 @@ for n_signal, signal in enumerate(signals):
             EntryFromBranch_mu = File.Muon.GetEntries()
             for j in range(EntryFromBranch_mu):
                 muon = TLorentzVector()
-                muon_PT, muon_Eta, muon_Phi, muon_M = File.GetLeaf("Muon.PT").GetValue(j), File.GetLeaf(
-                    "Muon.Eta").GetValue(j), File.GetLeaf("Muon.Phi").GetValue(j), 0.1056583755
+                muon_PT, muon_Eta, muon_Phi, muon_M, muon_charge, muon_mt = File.GetLeaf("Muon.PT").GetValue(j), File.GetLeaf(
+                    "Muon.Eta").GetValue(j), File.GetLeaf("Muon.Phi").GetValue(j), 0.1056583755, File.GetLeaf("Muon.Charge").GetValue(j), \
+                                                                            File.GetLeaf("Muon.MT").GetValue(j)
                 muon.SetPtEtaPhiM(muon_PT, muon_Eta, muon_Phi, muon_M)
-                muons.append(muon)
+                muons.append(muon_mt, muon_charge, muon)
 
             EntryFromBranch_MET = File.MissingET.GetEntries()
             for j in range(EntryFromBranch_MET):
                 MET = TLorentzVector()
-                MET_PT, MET_Eta, MET_Phi, MET_M = File.GetLeaf("MissingET.MET").GetValue(j), File.GetLeaf(
-                    "MissingET.Eta").GetValue(j), File.GetLeaf("MissingET.Phi").GetValue(j), 0.0
+                MET_PT, MET_Eta, MET_Phi, MET_M, MET_Mt = File.GetLeaf("MissingET.MET").GetValue(j), File.GetLeaf(
+                    "MissingET.Eta").GetValue(j), File.GetLeaf("MissingET.Phi").GetValue(j), 0.0, File.GetLeaf("MissingET.MT").GetValue(j)
                 MET.SetPtEtaPhiM(MET_PT, MET_Eta, MET_Phi, MET_M)
+                transverse_mass_METs.append(MET_Mt)
                 METs.append(MET)
 
             leptons = electrons + muons
@@ -98,14 +110,15 @@ for n_signal, signal in enumerate(signals):
             if (len(muons) >= 2):
 
                 jets.sort(reverse=True, key=PT)
-                muons.sort(reverse=True, key=PT)
+                muons.sort(reverse=True, key=muon_filter)
                 # j1, j2 = jets[0], jets[1]
                 # Estos son los dos muones de mayor pT.
-                mu1, mu2 = muons[0], muons[1]
+                mu1, mu2 = muons[2][0], muons[2][1]
                 # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
                 # Si es estrictamente la pareja de mayor pT, paso muons ordenada. Si no, puede estar desordenada y cogemos la primera
                 # pareja que satisfaga la condición
-                muons_cut, cut = cuts(muons)
+                # Le paso únicamente muons[2] porque es la lista de muones
+                muons_cut, cut = cuts(muons[2])
                 # Esto me da la pareja de muones de mayor p_T que además cumplen el Delta_R.
 
                 if (cut):
@@ -113,28 +126,55 @@ for n_signal, signal in enumerate(signals):
                     # Cogemos los dos muones que satisfacen el corte
                     mu1_cut, mu2_cut = leading_pair[0], leading_pair[1]
 
-                ############################# HISTOS ##########################3
+                ############################# HISTOS ###########################
+                if (cut):
+                    # Hacemos la grafica de Delta_R de los dos muones con mayor pT y Delta_R > 0.3
+                    plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
 
                 # Hacemos la gráfica de p_T de los dos muones de mayor p_T
                 plot_PT_mu1.Fill(mu1.Pt())
                 plot_PT_mu2.Fill(mu2.Pt())
 
-                # Sumamos los dos muones cut para hacer la gráfica de masa reconstruida.
-                mu_total = mu1 + mu2
-                # Hacemos la gráfica de masa reconstruida de mu_total.
-                plot_mRec_mu1_mu2.Fill(mu_total.M())
+                # El \Delta Phi es la diferencia entre ambos. ¿Resto los dos?
+                # Estos son los dos muones que resultan de la colisión ???
+                delta_mu = mu1 - mu2
+                plot_Delta_PHI_muons.Fill(delta_mu.Phi())
 
+                # Sumamos los dos muones para hacer la gráfica de masa reconstruida.
+                mu_total = mu1 + mu2
+                plot_mRec_mu1_mu2.Fill(mu_total.M())
+                # Hacemos la gráfica de masa reconstruida de mu_total.
                 for muon in muons:
                     plot_ETA_muons.Fill(muon.Eta())
                     plot_PHI_muons.Fill(muon.Phi())
+                    plot_Cos_Delta_PHI_muons.Fill(ROOT.TMath.cos(muon.Phi()))
+
+                # Hacemos la gráfica de la carga de los muones
+                charge = mu1.Charge() * mu2.Charge()
+                if charge < 0: plot_charge_muons.Fill(-1)
+                else: plot_charge_muons.Fill(1)
 
                 # MET
-                # for MET in METs:
-                # plot_MET.Fill(MET.Pt())
+                for MET in METs:
+                    plot_MET.Fill(MET.Pt())
 
-                if (cut):
-                    # Hacemos la grafica de Delta_R de los dos muones con mayor pT y Delta_R > 0.3
-                    plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
+                # Cogemos la masa transversa del muón de más alto Pt
+                Mt_mu_lead = muons[0][0]
+                # Cogemos la masa transversa del MET
+                ## Mt_MET = transverse_mass_METs[0]
+                # ¿Queremos la diferencia?
+                ## plot_transverse_mass.Fill(Mt_MET - Mt_mu_lead)
+
+
+                # Cogemos el PHI del MET
+                phi_met = MET[0].Phi()
+                delta_phi_met_mu_lead = phi_met - mu1.Phi()
+                plot_cos_Delta_PHI_MET_muon_lead.Fill(ROOT.TMath.cos(delta_phi_met_mu_lead))
+
+
+
+
+
 
     plot_PT_leptons.Draw("HIST")
     plot_ETA_muons.Draw("HIST")
@@ -144,6 +184,19 @@ for n_signal, signal in enumerate(signals):
     plot_Delta_R_mu1_mu2.Draw("HIST")
     plot_mRec_mu1_mu2.Draw("HIST")
 
+    plot_Delta_PHI_muons.Draw("HIST")
+    plot_Cos_Delta_PHI_muons.Draw("HIST")
+    plot_MET.Draw("HIST")
+    plot_charge_muons.Draw("HIST")
+    plot_cos_Delta_PHI_MET_muon_lead.Draw("HIST")
+    plot_transverse_mass.Draw("HIST")
+
+
+    x_axis_muons_charge = plot_charge_muons.GetXaxis()
+    x_axis_muons_charge.SetBinLabel(1, 'OS')
+    x_axis_muons_charge.SetBinLabel(2, 'SS')
+    plot_charge_muons.Draw("HIST")
+
     plot_PT_leptons.Write()
     plot_ETA_muons.Write()
     plot_PHI_muons.Write()
@@ -151,6 +204,14 @@ for n_signal, signal in enumerate(signals):
     plot_PT_mu2.Write()
     plot_Delta_R_mu1_mu2.Write()
     plot_mRec_mu1_mu2.Write()
+    plot_charge_muons.Write()
+    plot_Delta_PHI_muons.Write()
+    plot_Cos_Delta_PHI_muons.Write()
+    plot_MET.Write()
+    plot_charge_muons.Write()
+    plot_cos_Delta_PHI_MET_muon_lead.Write()
+    plot_transverse_mass.Write()
+    plot_charge_muons.Write()
 
     f.Close()
 
@@ -161,3 +222,10 @@ for n_signal, signal in enumerate(signals):
     plot_PT_mu2.Reset("ICESM")
     plot_Delta_R_mu1_mu2.Reset("ICESM")
     plot_mRec_mu1_mu2.Reset("ICESM")
+    plot_Delta_PHI_muons.Reset("ICESM")
+    plot_Cos_Delta_PHI_muons.Reset("ICESM")
+    plot_MET.Reset("ICESM")
+    plot_charge_muons.Reset("ICESM")
+    plot_cos_Delta_PHI_MET_muon_lead.Reset("ICESM")
+    plot_transverse_mass.Reset("ICESM")
+    plot_charge_muons.Reset("ICESM")
