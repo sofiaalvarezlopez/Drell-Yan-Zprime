@@ -33,7 +33,6 @@ signals = ["DY+jets"]
 jobs = [1]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
-plot_PT_leptons = TH1F("PT_leptons", "PT_leptons", 100, 0.0, 1000.0)
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
 plot_PT_mu2 = TH1F("PT_mu2", "PT_mu2", 100, 0.0, 1000.0)
 plot_ETA_muons = TH1F("ETA_muons", "ETA_muons", 100, -8.0, 8.0)
@@ -43,7 +42,7 @@ plot_mRec_mu1_mu2 = TH1F("M_REC muons", "M_REC muons", 100, 0, 100.0)
 
 plot_Delta_PHI_muons = TH1F("DELTA_PHI muons", "DELTA_PHI muons", 100, -8.0, 8.0)
 plot_Cos_Delta_PHI_muons = TH1F("Cos_DELTA_PHI muons", "Cos_DELTA_PHI muons", 100, -1.0, 1.0)
-plot_MET = TH1F("MET", "MET", 100, 0.0, 1000.0)
+plot_MET = TH1F("MET", "MET", 100, 0.0, 100.0)
 plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
 plot_cos_Delta_PHI_MET_muon_lead = TH1F("Cos_DELTA_PHI MET v. Muon lead", "Cos_DELTA_PHI MET v. Muon lead", 100, -1.0, 1.0)
 plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, 0.0, 1000)
@@ -166,7 +165,6 @@ for n_signal, signal in enumerate(signals):
 
 
 
-    plot_PT_leptons.Draw("HIST")
     plot_ETA_muons.Draw("HIST")
     plot_PHI_muons.Draw("HIST")
     plot_PT_mu1.Draw("HIST")
@@ -187,7 +185,6 @@ for n_signal, signal in enumerate(signals):
     x_axis_muons_charge.SetBinLabel(2, 'SS')
     plot_charge_muons.Draw("HIST")
 
-    plot_PT_leptons.Write()
     plot_ETA_muons.Write()
     plot_PHI_muons.Write()
     plot_PT_mu1.Write()
@@ -205,7 +202,6 @@ for n_signal, signal in enumerate(signals):
 
     f.Close()
 
-    plot_PT_leptons.Reset("ICESM")
     plot_ETA_muons.Reset("ICESM")
     plot_PHI_muons.Reset("ICESM")
     plot_PT_mu1.Reset("ICESM")
