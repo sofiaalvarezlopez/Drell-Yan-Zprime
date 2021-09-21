@@ -20,10 +20,11 @@ def cuts(mu_list, pt_cut=20, delta_R=0.3):
     global cut
     mu_cut = []
     cut = False
-    for i, tupla_1 in enumerate(mu_list):
-        for j, tupla_2 in enumerate(mu_list):
+    for i, tuple_1 in enumerate(mu_list):
+        for j, tuple_2 in enumerate(mu_list):
             if j > i:
-                mu_1, mu_2 = tupla_1[i][1], tupla_2[j][1]
+                print(tuple_1)
+                mu_1, mu_2 = tuple_1[i][1], tuple_2[j][1]
                 if mu_1.Pt() >= pt_cut and mu_2.Pt() >= pt_cut and mu_1.DeltaR(mu_2) > delta_R:
                     cut = True
                     mu_cut.append((mu_1, mu_2))
