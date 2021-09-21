@@ -20,9 +20,10 @@ def cuts(mu_list, pt_cut=20, delta_R=0.3):
     global cut
     mu_cut = []
     cut = False
-    for i, mu_1 in enumerate(mu_list):
-        for j, mu_2 in enumerate(mu_list):
+    for i, tupla_1 in enumerate(mu_list):
+        for j, tupla_2 in enumerate(mu_list):
             if j > i:
+                mu_1, mu_2 = tupla_1[i][1], tupla_2[j][1]
                 if mu_1.Pt() >= pt_cut and mu_2.Pt() >= pt_cut and mu_1.DeltaR(mu_2) > delta_R:
                     cut = True
                     mu_cut.append((mu_1, mu_2))
@@ -34,7 +35,7 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/SIMUL
        "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/"]
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root"]
-jobs = [8,8,8,8,8,8]
+jobs = [1,1,1,1,1,1]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
@@ -118,19 +119,18 @@ for n_signal, signal in enumerate(signals):
                 # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
                 # Si es estrictamente la pareja de mayor pT, paso muons ordenada. Si no, puede estar desordenada y cogemos la primera
                 # pareja que satisfaga la condición
-                # Le paso únicamente muons[2] porque es la lista de muones
-                # muons_cut, cut = cuts(muons[1])
+                muons_cut, cut = cuts(muons)
                 # Esto me da la pareja de muones de mayor p_T que además cumplen el Delta_R.
 
-                # if (cut):
-                  #  leading_pair = muons_cut[0]
+                if cut:
+                    leading_pair = muons_cut[0]
                     # Cogemos los dos muones que satisfacen el corte
-                   # mu1_cut, mu2_cut = leading_pair[0], leading_pair[1]
+                    mu1_cut, mu2_cut = leading_pair[0], leading_pair[1]
 
                 ############################# HISTOS ###########################
-                #if (cut):
+                if cut:
                     # Hacemos la grafica de Delta_R de los dos muones con mayor pT y Delta_R > 0.3
-                 #   plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
+                    plot_Delta_R_mu1_mu2.Fill(mu1_cut.DeltaR(mu2_cut))
 
                 # Hacemos la gráfica de p_T de los dos muones de mayor p_T
                 plot_PT_mu1.Fill(mu1.Pt())
