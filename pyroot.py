@@ -35,7 +35,7 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/SIMUL
        "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/"]
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root"]
-jobs = [1,1,1,1,1,1]
+jobs = [10,10,10,10,10,10]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
