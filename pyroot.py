@@ -50,8 +50,8 @@ signals = ["Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
 #       "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/"]
 ext = ["root/SIMULACIONES/Sofia/", "root/SIMULACIONES/Sofia/", "root/SIMULACIONES/Sofia/"]
 sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
-sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
-           "tag_1_delphes_events.root"]
+#sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
+#           "tag_1_delphes_events.root"]
 jobs = [2,2,2]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
