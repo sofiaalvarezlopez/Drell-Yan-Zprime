@@ -54,7 +54,7 @@ sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events~.root", "tag_1_del
 #           "tag_1_delphes_events.root"]
 jobs = [2,2,2]
 
-c1 = ROOT.TCanvas("c1", "Titulo")~
+c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
 plot_PT_mu2 = TH1F("PT_mu2", "PT_mu2", 100, 0.0, 1000.0)
 plot_ETA_muons = TH1F("ETA_muons", "ETA_muons", 100, -8.0, 8.0)
