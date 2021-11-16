@@ -45,12 +45,14 @@ def tau_cuts(tau_list, MET, pt_cut=20, delta_R=0.3):
 
 
 
-signals = ["w+jets", "ttbar", "ww", "wz", "zz", "DY+jets"]
-ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/",
-       "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/", "/root/data_docker/SIM_D3/SIMULACIONES/"]
+signals = ["Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
+#ext = ["/disco1/SIMULACIONES/", "falta", "/disco2/disco3_ORG/SIMULACIONES/",
+#       "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/"]
+ext = ["disco4/SIMULACIONES/Sofia", "disco4/SIMULACIONES/Sofia", "disco4/SIMULACIONES/Sofia"]
+sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root"]
-jobs = [10,10,10,10,10,10]
+jobs = [2,2,2]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
@@ -92,7 +94,6 @@ for n_signal, signal in enumerate(signals):
             bjets = []
             electrons = []
             muons = []
-            taus = []
             leptons = []
             METs = []
             num_b_jets = 0
@@ -107,11 +108,11 @@ for n_signal, signal in enumerate(signals):
                     if TauTag == 1 and BTag == 0:
                         if jet_Eta < 2.4:
                             jet = TLorentzVector()
-                            jet_PT, jet_Eta, jet_Phi, jet_M = File.GetLeaf("Jet.PT").GetValue(j), File.GetLeaf("Jet.Eta").GetValue(j), \
-                                                              File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j)
+                            jet_PT, jet_Eta, jet_Phi, jet_M, jet_charge = File.GetLeaf("Jet.PT").GetValue(j), \
+                            File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
+                                                                          File.GetLeaf("Jet.Charge").GetValue(j)
                             jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
-                            # Pero estos jets son solo tau! Que hago con ellos?
-                            jets.append(jet)
+                            jets.append((jet_charge, jet))
                 elif jet_PT > 30 and jet_Eta < 2.4 and BTag == 1:
                     num_b_jets += 1
                     bjet = TLorentzVector()
@@ -144,16 +145,7 @@ for n_signal, signal in enumerate(signals):
                 MET.SetPtEtaPhiM(MET_PT, MET_Eta, MET_Phi, MET_M)
                 METs.append(MET)
 
-            EntryFromBranch_tau = File.Tau.GetEntries()
-            for j in range(EntryFromBranch_tau):
-                tau = TLorentzVector()
-                tau_PT, tau_Eta, tau_Phi, tau_M, tau_charge = File.GetLeaf("Tau.PT").GetValue(j), File.GetLeaf(
-                    "Tau.Eta").GetValue(j), File.GetLeaf("Tau.Phi").GetValue(j), 1.77686, File.GetLeaf("Tau.Charge").GetValue(j)
-                tau.SetPtEtaPhiM(tau_PT, tau_Eta, tau_Phi, tau_M)
-                taus.append((tau_charge, tau))
-
-
-            leptons = electrons + muons + taus
+            leptons = electrons + muons
 
             if (len(muons) >= 2):
 
@@ -211,13 +203,12 @@ for n_signal, signal in enumerate(signals):
                 plot_cos_Delta_PHI_MET_muon_lead.Fill(np.cos(phi_met - mu1.Phi()))
 
             # Aqui tambien tengo que incluir a los jets ?
-            if(len(taus) >= 2):
-                jets.sort(reverse=True, key=PT)
-                taus.sort(reverse=True, key=lepton_filter)
+            if(len(jets) >= 2) and num_b_jets == 0:
+                jets.sort(reverse=True, key=lepton_filter)
                 # Estos son los dos tau de mayor pT.
-                tau1, tau2 = taus[0][1], taus[1][1]
+                tau1, tau2 = jets[0][1], jets[1][1]
                 # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
-                taus_cut, cut = tau_cuts(taus, METs[0].Pt())
+                taus_cut, cut = tau_cuts(jets, METs[0].Pt())
                 if cut:
                     leading_pair = taus_cut[0]
                     tau1_cut, tau2_cut = leading_pair[0], leading_pair[1]
