@@ -48,7 +48,7 @@ def tau_cuts(tau_list, MET, pt_cut=20, delta_R=0.3):
 signals = ["Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
 #ext = ["/disco1/SIMULACIONES/", "falta", "/disco2/disco3_ORG/SIMULACIONES/",
 #       "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/"]
-ext = ["root/SIMULACIONES/Sofia", "root/SIMULACIONES/Sofia", "root/SIMULACIONES/Sofia"]
+ext = ["root/SIMULACIONES/Sofia/", "root/SIMULACIONES/Sofia/", "root/SIMULACIONES/Sofia/"]
 sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root"]
