@@ -39,7 +39,7 @@ def tau_cuts(tau_list, MET, pt_cut=20, delta_R=0.3):
                 if (charge_tau_1*charge_tau_2 < 0) and (tau_1.DeltaR(tau_2) > delta_R) and (tau_1.Pt() >= pt_cut) and \
                         (tau_2.Pt() >= pt_cut) and MET > 30:
                     cut = True
-                    taus_cut.append(tau_1, tau_2)
+                    taus_cut.append((tau_1, tau_2))
     return taus_cut, cut
 
 
@@ -48,7 +48,7 @@ def tau_cuts(tau_list, MET, pt_cut=20, delta_R=0.3):
 signals = ["Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
 #ext = ["/disco1/SIMULACIONES/", "falta", "/disco2/disco3_ORG/SIMULACIONES/",
 #       "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/"]
-ext = ["/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/"]
+ext = ["/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/", "/SIMULACI~ONES/Sofia/"]
 sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 #sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
 #           "tag_1_delphes_events.root"]
