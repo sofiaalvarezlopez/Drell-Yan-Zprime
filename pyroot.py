@@ -149,7 +149,7 @@ for n_signal, signal in enumerate(signals):
 
             if (len(muons) >= 2):
 
-                jets.sort(reverse=True, key=PT)
+                jets.sort(reverse=True, key=lepton_filter)
                 muons.sort(reverse=True, key=lepton_filter)
                 # j1, j2 = jets[0], jets[1]
                 # Estos son los dos muones de mayor pT.
