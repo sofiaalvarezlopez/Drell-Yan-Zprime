@@ -75,6 +75,11 @@ plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, 0.0, 1000
 
 for n_signal, signal in enumerate(signals):
 
+    if signal == "Zprime_tata_1000":
+        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 2000.0)
+    elif signal == "Zprime_tata_3000":
+        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 4000.0)
+
     f = ROOT.TFile(signal + ".root", "recreate")
 
     for ind in range(1, jobs[n_signal] + 1):
