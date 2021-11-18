@@ -133,14 +133,14 @@ for n_signal, signal in enumerate(signals):
                 jet_PT = File.GetLeaf("Jet.PT").GetValue(j)
                 if jet_PT > 20:
                     if TauTag == 1 and BTag == 0:
-                        if jet_Eta < 2.4:
+                        if np.abs(jet_Eta) < 2.4:
                             jet = TLorentzVector()
                             jet_PT, jet_Eta, jet_Phi, jet_M, jet_charge = File.GetLeaf("Jet.PT").GetValue(j), \
                             File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
                                                                           File.GetLeaf("Jet.Charge").GetValue(j)
                             jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
                             jets.append((jet_charge, jet))
-                elif jet_PT > 30 and jet_Eta < 2.4 and BTag == 1:
+                elif jet_PT > 30 and np.abs(jet_Eta) < 2.4 and BTag == 1:
                     num_b_jets += 1
                     bjet = TLorentzVector()
                     bjet_PT, bjet_Eta, bjet_Phi, bjet_M = File.GetLeaf("Jet.PT").GetValue(j), File.GetLeaf("Jet.Eta").GetValue(j), \
