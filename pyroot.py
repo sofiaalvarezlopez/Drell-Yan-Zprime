@@ -54,6 +54,7 @@ sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.r
 jobs = [20,20,20,20,20,20,2,2,2]
 
 signals = signals[-3:]
+sufijos = sufijos[-3:]
 ext = ext[-3:]
 jobs = jobs[-3:]
 
