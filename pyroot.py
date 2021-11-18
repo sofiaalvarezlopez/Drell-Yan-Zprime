@@ -63,10 +63,24 @@ plot_mRec_mu1_mu2 = TH1F("M_REC muons", "M_REC muons", 100, 0, 100.0)
 
 plot_Delta_PHI_muons = TH1F("DELTA_PHI muons", "DELTA_PHI muons", 100, -8.0, 8.0)
 plot_Cos_Delta_PHI_muons = TH1F("Cos_DELTA_PHI muons", "Cos_DELTA_PHI muons", 100, -1.0, 1.0)
+
 plot_Cos_Delta_PHI_taus = TH1F("Cos_DELTA_PHI taus", "Cos_DELTA_PHI taus", 100, -1.0, 1.0)
 plot_Cos_Delta_PHI_MET_tau1 = TH1F("Cos_DELTA_PHI MET tau1", "Cos_DELTA_PHI MET tau1", 100, -1.0, 1.0)
 plot_Cos_Delta_PHI_MET_tau2 = TH1F("Cos_DELTA_PHI MET tau2", "Cos_DELTA_PHI MET tau2", 100, -1.0, 1.0)
 plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 1000.0)
+plot_Delta_PHI_taus = TH1F("DELTA_PHI taus", "DELTA_PHI taus", 100, -8.0, 8.0)
+plot_Delta_ETA_taus = TH1F("DELTA_ETA taus", "DELTA_ETA taus", 100, -8.0, 8.0)
+plot_Delta_R_taus = TH1F("DELTA_R taus", "DELTA_R taus", 100, 0, 10.0)
+plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 1000.0)
+plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 1000.0)
+plot_ETA_taus = TH1F("ETA_taus", "ETA_taus", 100, -8.0, 8.0)
+plot_PHI_taus = TH1F("PHI_taus", "PHI_taus", 100, -8.0, 8.0)
+plot_P_tau1 = TH1F("P_taus", "P_taus", 100, 0, 1000.0)
+plot_P_tau2 = TH1F("P_taus", "P_taus", 100, 0, 1000.0)
+
+
+
+
 plot_MET = TH1F("MET", "MET", 100, 0.0, 100.0)
 plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
 plot_cos_Delta_PHI_MET_muon_lead = TH1F("Cos_DELTA_PHI MET v. Muon lead", "Cos_DELTA_PHI MET v. Muon lead", 100, -1.0, 1.0)
@@ -76,8 +90,17 @@ for n_signal, signal in enumerate(signals):
 
     if signal == "Zprime_tata_1000":
         plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 2000.0)
+        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 2000.0)
+        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 2000.0)
+        plot_P_tau1 = TH1F("P_taus", "P_taus", 100, 0, 2000.0)
+        plot_P_tau2 = TH1F("P_taus", "P_taus", 100, 0, 2000.0)
+
     elif signal == "Zprime_tata_3000":
-        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 4000.0)
+        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 3500.0)
+        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 3500.0)
+        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 3500.0)
+        plot_P_tau1 = TH1F("P_taus", "P_taus", 100, 0, 3500.0)
+        plot_P_tau2 = TH1F("P_taus", "P_taus", 100, 0, 3500.0)
 
     f = ROOT.TFile(signal + ".root", "recreate")
 
@@ -206,7 +229,6 @@ for n_signal, signal in enumerate(signals):
                 phi_met = METs[0].Phi()
                 plot_cos_Delta_PHI_MET_muon_lead.Fill(np.cos(phi_met - mu1.Phi()))
 
-            # Aqui tambien tengo que incluir a los jets ?
             if(len(jets) >= 2) and num_b_jets == 0:
                 jets.sort(reverse=True, key=lepton_filter)
                 # Estos son los dos tau de mayor pT.
@@ -223,7 +245,20 @@ for n_signal, signal in enumerate(signals):
                     plot_Cos_Delta_PHI_MET_tau1.Fill(np.cos(phi_met - tau1_cut.Phi()))
                     plot_Cos_Delta_PHI_MET_tau2.Fill(np.cos(phi_met - tau2_cut.Phi()))
                     plot_Delta_Pt_taus.Fill((tau1_cut - tau2_cut).Pt())
+                    plot_Delta_PHI_taus.Fill(tau1_cut.DeltaPhi(tau2_cut))
+                    plot_Delta_ETA_taus.Fill(tau1_cut.DeltaEta(tau2_cut))
+                    plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
+                    # Hacemos la gráfica de p_T de los dos tau de mayor p_T
+                    plot_PT_tau1.Fill(tau1.Pt())
+                    plot_PT_tau2.Fill(tau2.Pt())
+                    # Hacemos la grafica de P de los dos tau
+                    plot_P_tau1.Fill(tau1_cut.P())
+                    plot_P_tau2.Fill(tau2_cut.P())
 
+                    # Hacemos la gráfica de eta y tau de todos los tau
+                    for tau in jets:
+                        plot_ETA_taus.Fill(tau[1].Eta())
+                        plot_PHI_taus.Fill(tau[1].Phi())
 
     plot_ETA_muons.Draw("HIST")
     plot_PHI_muons.Draw("HIST")
@@ -244,6 +279,15 @@ for n_signal, signal in enumerate(signals):
     plot_Cos_Delta_PHI_MET_tau2.Draw("HIST")
     plot_Delta_Pt_taus.Draw("HIST")
 
+    plot_Delta_PHI_taus.Draw("HIST")
+    plot_Delta_ETA_taus.Draw("HIST")
+    plot_Delta_R_taus.Draw("HIST")
+    plot_PT_tau1.Draw("HIST")
+    plot_PT_tau2.Draw("HIST")
+    plot_ETA_taus.Draw("HIST")
+    plot_PHI_taus.Draw("HIST")
+    plot_P_tau1.Draw("HIST")
+    plot_P_tau2.Draw("HIST")
 
     x_axis_muons_charge = plot_charge_muons.GetXaxis()
     x_axis_muons_charge.SetBinLabel(1, 'OS')
@@ -270,6 +314,15 @@ for n_signal, signal in enumerate(signals):
     plot_Cos_Delta_PHI_MET_tau1.Write()
     plot_Cos_Delta_PHI_MET_tau2.Write()
     plot_Delta_Pt_taus.Write()
+    plot_Delta_PHI_taus.Write()
+    plot_Delta_ETA_taus.Write()
+    plot_Delta_R_taus.Write()
+    plot_PT_tau1.Write()
+    plot_PT_tau2.Write()
+    plot_ETA_taus.Write()
+    plot_PHI_taus.Write()
+    plot_P_tau1.Write()
+    plot_P_tau2.Write()
 
     f.Close()
 
@@ -292,3 +345,12 @@ for n_signal, signal in enumerate(signals):
     plot_Cos_Delta_PHI_MET_tau1.Reset("ICESM")
     plot_Cos_Delta_PHI_MET_tau2.Reset("ICESM")
     plot_Delta_Pt_taus.Reset("ICESM")
+    plot_Delta_PHI_taus.Reset("ICESM")
+    plot_Delta_ETA_taus.Reset("ICESM")
+    plot_Delta_R_taus.Reset("ICESM")
+    plot_PT_tau1.Reset("ICESM")
+    plot_PT_tau2.Reset("ICESM")
+    plot_ETA_taus.Reset("ICESM")
+    plot_PHI_taus.Reset("ICESM")
+    plot_P_tau1.Reset("ICESM")
+    plot_P_tau2.Reset("ICESM")
