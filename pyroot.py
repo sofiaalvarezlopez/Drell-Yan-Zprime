@@ -44,15 +44,14 @@ def tau_cuts(tau_list, MET, pt_cut=20, delta_R=0.3):
 
 
 
+signals = ["w+jets", "ttbar", "ww", "wz", "zz", "DY+jets", "Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
+ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/disco2_ORG/SIMULACIONES/", "/root/data_docker/SIM_D2/disco3_ORG/SIMULACIONES/",
+       "/root/data_docker/SIM_D2/disco3_ORG/SIMULACIONES/", "/root/data_docker/SIM_D2/disco3_ORG/SIMULACIONES/", "/root/data_docker/SIM_D2/disco3_ORG/SIMULACIONES/",
+       "~/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/"]
 
-signals = ["Zprime_tata_350", "Zprime_tata_1000", "Zprime_tata_3000"]
-#ext = ["/disco1/SIMULACIONES/", "falta", "/disco2/disco3_ORG/SIMULACIONES/",
-#       "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/", "/disco2/disco3_ORG/SIMULACIONES/"]
-ext = ["~/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/", "~/SIMULACIONES/Sofia/"]
-sufijos = ["tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
-#sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
-#           "tag_1_delphes_events.root"]
-jobs = [2,2,2]
+sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
+           "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
+jobs = [2]*len(signals)
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
