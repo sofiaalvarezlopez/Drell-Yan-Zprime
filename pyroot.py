@@ -53,6 +53,10 @@ sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.r
            "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 jobs = [20,20,20,20,20,20,2,2,2]
 
+signals = signals[-3:]
+ext = ext[-3:]
+jobs = jobs[-3:]
+
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
 plot_PT_mu2 = TH1F("PT_mu2", "PT_mu2", 100, 0.0, 1000.0)
@@ -92,15 +96,15 @@ for n_signal, signal in enumerate(signals):
         plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 2000.0)
         plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 2000.0)
         plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 2000.0)
-        plot_P_tau1 = TH1F("P_taus", "P_taus", 100, 0, 2000.0)
-        plot_P_tau2 = TH1F("P_taus", "P_taus", 100, 0, 2000.0)
+        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 2000.0)
+        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 2000.0)
 
     elif signal == "Zprime_tata_3000":
         plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 3500.0)
         plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 3500.0)
         plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 3500.0)
-        plot_P_tau1 = TH1F("P_taus", "P_taus", 100, 0, 3500.0)
-        plot_P_tau2 = TH1F("P_taus", "P_taus", 100, 0, 3500.0)
+        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 3500.0)
+        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 3500.0)
 
     f = ROOT.TFile(signal + ".root", "recreate")
 
