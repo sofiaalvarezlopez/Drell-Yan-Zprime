@@ -246,7 +246,7 @@ for n_signal, signal in enumerate(signals):
                     plot_Cos_Delta_PHI_MET_tau2.Fill(np.cos(phi_met - tau2_cut.Phi()))
                     plot_Delta_Pt_taus.Fill((tau1_cut - tau2_cut).Pt())
                     plot_Delta_PHI_taus.Fill(tau1_cut.DeltaPhi(tau2_cut))
-                    plot_Delta_ETA_taus.Fill(tau1_cut.DeltaEta(tau2_cut))
+                    plot_Delta_ETA_taus.Fill(tau1_cut.Eta() - tau2_cut.Eta())
                     plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
                     # Hacemos la gráfica de p_T de los dos tau de mayor p_T
                     plot_PT_tau1.Fill(tau1.Pt())
