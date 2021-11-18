@@ -36,11 +36,11 @@ void merge_histos()
 
     //vector<int> colors {3, 7, 6, 5, 2, 4, 8, 9, 1, 43, 97, 38};
     //vector<int> colors {3, 7, 6, 4, 2};
-    vector<int> colors {3, 7, 6, 5, 2, 4, 8, 9, 1};
+    vector<int> colors {3, 7, 6, 5, 4, 8, 43, 97, 38};
 
     //vector<int> linestyles {1, 1, 1, 1, 10, 9, 8, 7, 6, 5, 4, 3};
     //vector<int> linestyles {1, 1, 1, 1, 1};
-    vector<int> linestyles {1, 1, 1, 1, 1, 1, 10, 10, 10};
+    vector<int> linestyles {1, 1, 1, 1, 1, 1, 10, 9, 8};
 
     TList *l = new TList();
 
