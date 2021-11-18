@@ -1,0 +1,72 @@
+TClass::Init:0: RuntimeWarning: no dictionary for class HepMCEvent is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Event is available
+TClass::Init:0: RuntimeWarning: no dictionary for class GenParticle is available
+TClass::Init:0: RuntimeWarning: no dictionary for class SortableObject is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Track is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Tower is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Jet is available
+TClass::Init:0: RuntimeWarning: no dictionary for class MissingET is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Electron is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Photon is available
+TClass::Init:0: RuntimeWarning: no dictionary for class Muon is available
+TClass::Init:0: RuntimeWarning: no dictionary for class ScalarHT is available
+Signal: w+jets_1
+Signal: w+jets_2
+Signal: w+jets_3
+Signal: w+jets_4
+Signal: w+jets_5
+Signal: w+jets_6
+Signal: w+jets_7
+Signal: w+jets_8
+Signal: w+jets_9
+Signal: w+jets_10
+Signal: ttbar_1
+Signal: ttbar_2
+Signal: ttbar_3
+Signal: ttbar_4
+Signal: ttbar_5
+Signal: ttbar_6
+Signal: ttbar_7
+Signal: ttbar_8
+Signal: ttbar_9
+Signal: ttbar_10
+Signal: ww_1
+Signal: ww_2
+Signal: ww_3
+Signal: ww_4
+Signal: ww_5
+Signal: ww_6
+Signal: ww_7
+Signal: ww_8
+Signal: ww_9
+Signal: ww_10
+Signal: wz_1
+Signal: wz_2
+Signal: wz_3
+Signal: wz_4
+Signal: wz_5
+Signal: wz_6
+Signal: wz_7
+Signal: wz_8
+Signal: wz_9
+Signal: wz_10
+Signal: zz_1
+Signal: zz_2
+Signal: zz_3
+Signal: zz_4
+Signal: zz_5
+Signal: zz_6
+Signal: zz_7
+Signal: zz_8
+Signal: zz_9
+Signal: zz_10
+Signal: DY+jets_1
+Signal: DY+jets_2
+Signal: DY+jets_3
+Signal: DY+jets_4
+Signal: DY+jets_5
+Signal: DY+jets_6
+Signal: DY+jets_7
+Signal: DY+jets_8
+Signal: DY+jets_9
+Signal: DY+jets_10
