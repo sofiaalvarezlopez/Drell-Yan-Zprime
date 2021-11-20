@@ -16,11 +16,11 @@ void merge_histos()
 
 
     //vector<std::string> names_files_wo_ext {"$t\\bar{t}h$", "$t\\bar{t}t\\bar{t}$", "$t\\bar{t}b\\bar{b}/h$", "$WWZ$", "$m(Z')=350\\,GeV$", "$m(Z')=500\\,GeV$", "$m(Z')=750\\,GeV$", "$m(Z')=1000\\,GeV$", "$m(Z')=1500\\,GeV$", "$m(Z')=2000\\,GeV$", "$m(Z')=3000\\,GeV$", "$m(Z')=4000\\,GeV$"};
-    vector<std::string> names_files_wo_ext {"DY+jets", "t\\bar{t}", "WW", "WZ", "ZZ", "W+jets", "$m(Z')=350\\,GeV$", "$m(Z')=1000\\,GeV$", "$m(Z')=3000\\,GeV$"};
+    vector<std::string> names_files_wo_ext {"DY+jets", "t\\bar{t}", "WW", "WZ", "ZZ", "$m(Z')=350\\,GeV$", "$m(Z')=1000\\,GeV$", "$m(Z')=3000\\,GeV$"};
 
     //vector<std::string> names {"t#bar{t}h", "t#bar{t}t#bar{t}", "t#bar{t}b#bar{b}/h", "WWZ", "t#bar{t}Z', m(Z')= 350 GeV", "t#bar{t}Z', m(Z')= 500 GeV", "t#bar{t}Z', m(Z')= 750 GeV", "t#bar{t}Z', m(Z')= 1000 GeV", "t#bar{t}Z', m(Z')= 1500 GeV", "t#bar{t}Z', m(Z')= 2000 GeV", "t#bar{t}Z', m(Z')= 3000 GeV", "t#bar{t}Z', m(Z')= 4000 GeV"};
     //vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ"};
-    vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ", "W+jets", "m(Z')= 350 GeV", "m(Z')= 1000 GeV", "m(Z')= 3000 GeV"};
+    vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ", "m(Z')= 350 GeV", "m(Z')= 1000 GeV", "m(Z')= 3000 GeV"};
 
     //vector<std::string> plots {"ETA_muons", "PHI_muons", "PT_mu1", "PT_mu2", "DELTA_R muons", "M_REC muons", "Charge muons", "DELTA_PHI muons", "Cos_DELTA_PHI muons", "MET", "Cos_DELTA_PHI MET v. Muon lead", "Transverse_mass"};
     vector<std::string> plots {"Cos_DELTA_PHI taus", "Cos_DELTA_PHI MET tau1", "Cos_DELTA_PHI MET tau2", "DELTA_Pt taus", "DELTA_PHI taus", "DELTA_ETA taus", "DELTA_R taus", "PT_tau1", "PT_tau2", "ETA_taus", "PHI_taus", "P_tau1", "P_tau2"};

@@ -51,12 +51,9 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/disco
 
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
-jobs = [20,20,20,20,20,20,2,2,2]
+#jobs = [600,500,250,200,200,500,2,2,2]
+jobs = [600,0,0,0,0,500,0,0,0]
 
-signals = signals[-3:]
-sufijos = sufijos[-3:]
-ext = ext[-3:]
-jobs = jobs[-3:]
 
 c1 = ROOT.TCanvas("c1", "Titulo")
 plot_PT_mu1 = TH1F("PT_mu1", "PT_mu1", 100, 0.0, 1000.0)
