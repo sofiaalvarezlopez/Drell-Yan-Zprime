@@ -10,8 +10,8 @@ void merge_histos()
   
     //vector<std::string> names_files {"bkg1.root", "bkg2.root", "bkg3.root", "bkg4.root", "signal1.root", "signal2.root", "signal3.root", "signal4.root", "signal5.root", "signal6.root", "signal7.root", "signal8.root"};
     vector<std::string> names_files {"Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/DY+jets.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/ttbar.root", 
-    "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/ww.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/wz.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/zz.root", 
-    "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/w+jets.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/Zprime_tata_350.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/Zprime_tata_1000.root", 
+    "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/ww.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/wz.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/w+jets.root", 
+    "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/zz.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/Zprime_tata_350.root", "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/Zprime_tata_1000.root", 
     "Documents/Universidad/Noveno Semestre/Proyecto Teórico:Computacional/pyroot/Zprime_tata_3000.root"};
 
 
@@ -20,7 +20,7 @@ void merge_histos()
 
     //vector<std::string> names {"t#bar{t}h", "t#bar{t}t#bar{t}", "t#bar{t}b#bar{b}/h", "WWZ", "t#bar{t}Z', m(Z')= 350 GeV", "t#bar{t}Z', m(Z')= 500 GeV", "t#bar{t}Z', m(Z')= 750 GeV", "t#bar{t}Z', m(Z')= 1000 GeV", "t#bar{t}Z', m(Z')= 1500 GeV", "t#bar{t}Z', m(Z')= 2000 GeV", "t#bar{t}Z', m(Z')= 3000 GeV", "t#bar{t}Z', m(Z')= 4000 GeV"};
     //vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ"};
-    vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ", "w+jets", "m(Z')= 350 GeV", "m(Z')= 1000 GeV", "m(Z')= 3000 GeV"};
+    vector<std::string> names {"DY+jets", "t#bar{t}", "WW", "WZ", "ZZ", "W+jets", "m(Z')= 350 GeV", "m(Z')= 1000 GeV", "m(Z')= 3000 GeV"};
 
     //vector<std::string> plots {"ETA_muons", "PHI_muons", "PT_mu1", "PT_mu2", "DELTA_R muons", "M_REC muons", "Charge muons", "DELTA_PHI muons", "Cos_DELTA_PHI muons", "MET", "Cos_DELTA_PHI MET v. Muon lead", "Transverse_mass"};
     vector<std::string> plots {"Cos_DELTA_PHI taus", "Cos_DELTA_PHI MET tau1", "Cos_DELTA_PHI MET tau2", "DELTA_Pt taus", "DELTA_PHI taus", "DELTA_ETA taus", "DELTA_R taus", "PT_tau1", "PT_tau2", "ETA_taus", "PHI_taus", "P_tau1", "P_tau2"};
@@ -36,11 +36,11 @@ void merge_histos()
 
     //vector<int> colors {3, 7, 6, 5, 2, 4, 8, 9, 1, 43, 97, 38};
     //vector<int> colors {3, 7, 6, 4, 2};
-    vector<int> colors {3, 7, 6, 5, 4, 8, 43, 97, 38};
+    vector<int> colors {6, 7, 2, 4, 3, 5, 1, 97, 63};
 
     //vector<int> linestyles {1, 1, 1, 1, 10, 9, 8, 7, 6, 5, 4, 3};
     //vector<int> linestyles {1, 1, 1, 1, 1};
-    vector<int> linestyles {1, 1, 1, 1, 1, 1, 10, 9, 8};
+    vector<int> linestyles {1, 1, 1, 1, 1, 1, 10, 10, 10};
 
     TList *l = new TList();
 
@@ -83,13 +83,13 @@ void merge_histos()
             {  
               h->SetLineColor(colors[j]);
               h->SetLineStyle(linestyles[j]);
-              h->SetLineWidth(2);
+              h->SetLineWidth(3);
             }
-
             else
             {
               h->SetFillColor(colors[j]);
-              h->SetFillStyle(1001);
+              h->SetFillStyle(3001);
+              //h->SetFillColorAlpha(colors[j], 0.7);
               h->SetLineColor(0);
             }
         }
