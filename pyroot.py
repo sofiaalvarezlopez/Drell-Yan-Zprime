@@ -52,7 +52,7 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/disco
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 #jobs = [600,500,250,200,200,500,20,20,20]
-jobs = [0,0,0,0,0,0,0,20,0]
+jobs = [0,0,0,0,0,0,1,0,0]
 
 
 c1 = ROOT.TCanvas("c1", "Titulo")
@@ -136,6 +136,7 @@ for n_signal, signal in enumerate(signals):
                 if jet_PT > 20:
                     if TauTag == 1 and BTag == 0:
                         if np.abs(jet_Eta) < 2.4:
+                            print(jet_PT)
                             jet = TLorentzVector()
                             jet_PT, jet_Eta, jet_Phi, jet_M, jet_charge = File.GetLeaf("Jet.PT").GetValue(j), \
                             File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
