@@ -52,7 +52,7 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/disco
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 #jobs = [600,500,250,200,200,500,20,20,20]
-jobs = [0,0,0,0,0,0,20,0,0]
+jobs = [0,0,0,0,0,0,0,20,0]
 
 
 c1 = ROOT.TCanvas("c1", "Titulo")
