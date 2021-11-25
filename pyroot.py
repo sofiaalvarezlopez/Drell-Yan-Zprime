@@ -15,8 +15,6 @@ def lepton_filter(lepton):
 # Retornamos todos los muones que satisfacen las condiciones.
 # Note que la primera pareja sera la de mayor p_T y delta_R según el cut.
 def muon_cuts(mu_list, pt_cut=20, delta_R=0.3):
-    global mu_cut
-    global cut
     mu_cut = []
     cut = False
     for i, tuple_1 in enumerate(mu_list):
@@ -52,7 +50,7 @@ ext = ["/root/data_docker/SIM_D1/SIMULACIONES/", "/root/data_docker/SIM_D2/disco
 sufijos = ["m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root", "m_delphes_events.root",
            "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root", "tag_1_delphes_events.root"]
 #jobs = [600,500,250,200,200,500,20,20,20]
-jobs = [0,0,0,0,0,0,1,0,0]
+jobs = [0,0,0,0,0,0,1,1,1]
 
 
 c1 = ROOT.TCanvas("c1", "Titulo")
@@ -133,16 +131,13 @@ for n_signal, signal in enumerate(signals):
                 TauTag = File.GetLeaf("Jet.TauTag").GetValue(j)
                 jet_Eta = File.GetLeaf("Jet.Eta").GetValue(j)
                 jet_PT = File.GetLeaf("Jet.PT").GetValue(j)
-                if jet_PT > 20:
-                    if TauTag == 1 and BTag == 0:
-                        if np.abs(jet_Eta) < 2.4:
-                            print(jet_PT)
-                            jet = TLorentzVector()
-                            jet_PT, jet_Eta, jet_Phi, jet_M, jet_charge = File.GetLeaf("Jet.PT").GetValue(j), \
-                            File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
-                                                                          File.GetLeaf("Jet.Charge").GetValue(j)
-                            jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
-                            jets.append((jet_charge, jet))
+                if jet_PT > 20 and TauTag == 1 and np.abs(jet_Eta) < 2.4:
+                    jet = TLorentzVector()
+                    jet_PT, jet_Eta, jet_Phi, jet_M, jet_charge = File.GetLeaf("Jet.PT").GetValue(j), \
+                    File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
+                                                                    File.GetLeaf("Jet.Charge").GetValue(j)
+                    jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
+                    jets.append((jet_charge, jet))
                 elif jet_PT > 30 and np.abs(jet_Eta) < 2.4 and BTag == 1:
                     num_b_jets += 1
                     bjet = TLorentzVector()
@@ -177,9 +172,38 @@ for n_signal, signal in enumerate(signals):
 
             leptons = electrons + muons
 
-            if (len(muons) >= 2):
-
+            if (len(jets) >= 2) and (num_b_jets == 0):
                 jets.sort(reverse=True, key=lepton_filter)
+                # Estos son los dos tau de mayor pT.
+                tau1, tau2 = jets[0][1], jets[1][1]
+                # Tomamos los taus que satisfagan el corte. Cada uno es un TLorentzVector.
+                taus_cut, cut = tau_cuts(jets, METs[0].Pt())
+                if cut:
+                    leading_pair = taus_cut[0]
+                    tau1_cut, tau2_cut = leading_pair[0], leading_pair[1]
+                    ############################# HISTOS ###########################
+                    # Cogemos el PHI del MET
+                    phi_met = METs[0].Phi()
+                    plot_Cos_Delta_PHI_taus.Fill(np.cos(tau1_cut.Phi() - tau2_cut.Phi()))
+                    plot_Cos_Delta_PHI_MET_tau1.Fill(np.cos(phi_met - tau1_cut.Phi()))
+                    plot_Cos_Delta_PHI_MET_tau2.Fill(np.cos(phi_met - tau2_cut.Phi()))
+                    plot_Delta_Pt_taus.Fill((tau1_cut - tau2_cut).Pt())
+                    plot_Delta_PHI_taus.Fill(tau1_cut.DeltaPhi(tau2_cut))
+                    plot_Delta_ETA_taus.Fill(tau1_cut.Eta() - tau2_cut.Eta())
+                    plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
+                    # Hacemos la gráfica de p_T de los dos tau de mayor p_T
+                    plot_PT_tau1.Fill(tau1_cut.Pt())
+                    plot_PT_tau2.Fill(tau2_cut.Pt())
+                    # Hacemos la grafica de P de los dos tau
+                    plot_P_tau1.Fill(tau1_cut.P())
+                    plot_P_tau2.Fill(tau2_cut.P())
+
+                    # Hacemos la gráfica de eta y tau de todos los tau
+                    for tau in jets:
+                        plot_ETA_taus.Fill(tau[1].Eta())
+                        plot_PHI_taus.Fill(tau[1].Phi())
+
+            if len(muons) >= 2:
                 muons.sort(reverse=True, key=lepton_filter)
                 # j1, j2 = jets[0], jets[1]
                 # Estos son los dos muones de mayor pT.
@@ -231,37 +255,6 @@ for n_signal, signal in enumerate(signals):
                 # Cogemos el PHI del MET
                 phi_met = METs[0].Phi()
                 plot_cos_Delta_PHI_MET_muon_lead.Fill(np.cos(phi_met - mu1.Phi()))
-
-            if(len(jets) >= 2) and num_b_jets == 0:
-                jets.sort(reverse=True, key=lepton_filter)
-                # Estos son los dos tau de mayor pT.
-                tau1, tau2 = jets[0][1], jets[1][1]
-                # Tomamos los muones que satisfagan el corte. Cada uno es un TLorentzVector.
-                taus_cut, cut = tau_cuts(jets, METs[0].Pt())
-                if cut:
-                    leading_pair = taus_cut[0]
-                    tau1_cut, tau2_cut = leading_pair[0], leading_pair[1]
-                    ############################# HISTOS ###########################
-                    # Cogemos el PHI del MET
-                    phi_met = METs[0].Phi()
-                    plot_Cos_Delta_PHI_taus.Fill(np.cos(tau1_cut.Phi() - tau2_cut.Phi()))
-                    plot_Cos_Delta_PHI_MET_tau1.Fill(np.cos(phi_met - tau1_cut.Phi()))
-                    plot_Cos_Delta_PHI_MET_tau2.Fill(np.cos(phi_met - tau2_cut.Phi()))
-                    plot_Delta_Pt_taus.Fill((tau1_cut - tau2_cut).Pt())
-                    plot_Delta_PHI_taus.Fill(tau1_cut.DeltaPhi(tau2_cut))
-                    plot_Delta_ETA_taus.Fill(tau1_cut.Eta() - tau2_cut.Eta())
-                    plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
-                    # Hacemos la gráfica de p_T de los dos tau de mayor p_T
-                    plot_PT_tau1.Fill(tau1.Pt())
-                    plot_PT_tau2.Fill(tau2.Pt())
-                    # Hacemos la grafica de P de los dos tau
-                    plot_P_tau1.Fill(tau1_cut.P())
-                    plot_P_tau2.Fill(tau2_cut.P())
-
-                    # Hacemos la gráfica de eta y tau de todos los tau
-                    for tau in jets:
-                        plot_ETA_taus.Fill(tau[1].Eta())
-                        plot_PHI_taus.Fill(tau[1].Phi())
 
     plot_ETA_muons.Draw("HIST")
     plot_PHI_muons.Draw("HIST")
