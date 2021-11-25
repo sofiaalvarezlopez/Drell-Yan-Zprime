@@ -78,36 +78,13 @@ plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
 plot_cos_Delta_PHI_MET_muon_lead = TH1F("Cos_DELTA_PHI MET v. Muon lead", "Cos_DELTA_PHI MET v. Muon lead", 100, -1.0, 1.0)
 plot_transverse_mass = TH1F("Transverse_mass", "Transverse_mass", 100, 0.0, 1000)
 
+plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 3500.0)
+plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 3500.0)
+plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 3500.0)
+plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 3500.0)
+plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 3500.0)
+
 for n_signal, signal in enumerate(signals):
-
-    if signal == "Zprime_tata_1000":
-        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 2000.0)
-        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 2000.0)
-        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 2000.0)
-        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 2000.0)
-        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 2000.0)
-
-    elif signal == "Zprime_tata_3000":
-        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 3500.0)
-        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 3500.0)
-        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 3500.0)
-        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 3500.0)
-        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 3500.0)
-
-    elif signal == "Zprime_tata_350":
-        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 1000.0)
-        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 1000.0)
-        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 1000.0)
-        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 1000.0)
-        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 1000.0)
-
-    else:
-        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 500.0)
-        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 500.0)
-        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 500.0)
-        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 500.0)
-        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 500.0)
-
 
     f = ROOT.TFile(signal + ".root", "recreate")
 
