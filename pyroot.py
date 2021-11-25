@@ -107,6 +107,7 @@ for n_signal, signal in enumerate(signals):
             muons = []
             leptons = []
             METs = []
+            prov = []
             num_b_jets = 0
 
             EntryFromBranch_j = File.Jet.GetEntries()
@@ -121,6 +122,7 @@ for n_signal, signal in enumerate(signals):
                     File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
                                                                     File.GetLeaf("Jet.Charge").GetValue(j)
                     jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
+                    prov.append(jet_PT)
                     jets.append((jet_charge, jet))
                 elif jet_PT > 30 and np.abs(jet_Eta) < 2.4 and BTag == 1:
                     num_b_jets += 1
@@ -176,7 +178,8 @@ for n_signal, signal in enumerate(signals):
                     plot_Delta_ETA_taus.Fill(tau1_cut.Eta() - tau2_cut.Eta())
                     plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
                     # Hacemos la gráfica de p_T de los dos tau de mayor p_T
-                    plot_PT_tau1.Fill(tau1_cut.Pt())
+                    #plot_PT_tau1.Fill(tau1_cut.Pt())
+                    plot_PT_tau1.Fill(prov)
                     plot_PT_tau2.Fill(tau2_cut.Pt())
                     # Hacemos la grafica de P de los dos tau
                     plot_P_tau1.Fill(tau1_cut.P())
