@@ -179,7 +179,6 @@ for n_signal, signal in enumerate(signals):
                     plot_Delta_R_taus.Fill(tau1_cut.DeltaR(tau2_cut))
                     # Hacemos la gráfica de p_T de los dos tau de mayor p_T
                     #plot_PT_tau1.Fill(tau1_cut.Pt())
-                    plot_PT_tau1.Fill(prov)
                     plot_PT_tau2.Fill(tau2_cut.Pt())
                     # Hacemos la grafica de P de los dos tau
                     plot_P_tau1.Fill(tau1_cut.P())
@@ -189,6 +188,7 @@ for n_signal, signal in enumerate(signals):
                     for tau in jets:
                         plot_ETA_taus.Fill(tau[1].Eta())
                         plot_PHI_taus.Fill(tau[1].Phi())
+                        plot_PT_tau1.Fill(tau.Pt())
 
             if len(muons) >= 2:
                 muons.sort(reverse=True, key=lepton_filter)
