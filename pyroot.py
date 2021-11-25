@@ -70,15 +70,8 @@ plot_Cos_Delta_PHI_MET_tau2 = TH1F("Cos_DELTA_PHI MET tau2", "Cos_DELTA_PHI MET 
 plot_Delta_PHI_taus = TH1F("DELTA_PHI taus", "DELTA_PHI taus", 100, -8.0, 8.0)
 plot_Delta_ETA_taus = TH1F("DELTA_ETA taus", "DELTA_ETA taus", 100, -8.0, 8.0)
 plot_Delta_R_taus = TH1F("DELTA_R taus", "DELTA_R taus", 100, 0, 10.0)
-plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 1000.0)
-plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 1000.0)
 plot_ETA_taus = TH1F("ETA_taus", "ETA_taus", 100, -8.0, 8.0)
 plot_PHI_taus = TH1F("PHI_taus", "PHI_taus", 100, -8.0, 8.0)
-plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 1000.0)
-plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 1000.0)
-
-
-
 
 plot_MET = TH1F("MET", "MET", 100, 0.0, 100.0)
 plot_charge_muons = TH1F("Charge muons", "Charge muons", 2, -1.0, 1.0)
