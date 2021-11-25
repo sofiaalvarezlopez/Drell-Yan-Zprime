@@ -188,7 +188,7 @@ for n_signal, signal in enumerate(signals):
                     for tau in jets:
                         plot_ETA_taus.Fill(tau[1].Eta())
                         plot_PHI_taus.Fill(tau[1].Phi())
-                        plot_PT_tau1.Fill(tau.Pt())
+                        plot_PT_tau1.Fill(tau[1].Pt())
 
             if len(muons) >= 2:
                 muons.sort(reverse=True, key=lepton_filter)
