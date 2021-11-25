@@ -67,7 +67,6 @@ plot_Cos_Delta_PHI_muons = TH1F("Cos_DELTA_PHI muons", "Cos_DELTA_PHI muons", 10
 plot_Cos_Delta_PHI_taus = TH1F("Cos_DELTA_PHI taus", "Cos_DELTA_PHI taus", 100, -1.0, 1.0)
 plot_Cos_Delta_PHI_MET_tau1 = TH1F("Cos_DELTA_PHI MET tau1", "Cos_DELTA_PHI MET tau1", 100, -1.0, 1.0)
 plot_Cos_Delta_PHI_MET_tau2 = TH1F("Cos_DELTA_PHI MET tau2", "Cos_DELTA_PHI MET tau2", 100, -1.0, 1.0)
-plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 1000.0)
 plot_Delta_PHI_taus = TH1F("DELTA_PHI taus", "DELTA_PHI taus", 100, -8.0, 8.0)
 plot_Delta_ETA_taus = TH1F("DELTA_ETA taus", "DELTA_ETA taus", 100, -8.0, 8.0)
 plot_Delta_R_taus = TH1F("DELTA_R taus", "DELTA_R taus", 100, 0, 10.0)
@@ -101,6 +100,21 @@ for n_signal, signal in enumerate(signals):
         plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 3500.0)
         plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 3500.0)
         plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 3500.0)
+
+    elif signal == "Zprime_tata_350":
+        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 1000.0)
+        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 1000.0)
+        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 1000.0)
+        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 1000.0)
+        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 1000.0)
+
+    else:
+        plot_Delta_Pt_taus = TH1F("DELTA_Pt taus", "DELTA_Pt taus", 100, 0, 500.0)
+        plot_PT_tau1 = TH1F("PT_tau1", "PT_tau1", 100, 0.0, 500.0)
+        plot_PT_tau2 = TH1F("PT_tau2", "PT_tau2", 100, 0.0, 500.0)
+        plot_P_tau1 = TH1F("P_tau1", "P_tau1", 100, 0, 500.0)
+        plot_P_tau2 = TH1F("P_tau2", "P_tau2", 100, 0, 500.0)
+
 
     f = ROOT.TFile(signal + ".root", "recreate")
 
