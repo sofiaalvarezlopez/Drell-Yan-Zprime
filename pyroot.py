@@ -94,7 +94,7 @@ for n_signal, signal in enumerate(signals):
         File = ROOT.TChain("Delphes;1")
         File.Add(directory)
         Number = File.GetEntries()
-
+        Number = 10
         print("Signal: " + signal + "_" + str(ind))
 
         for i in range(Number):
@@ -121,6 +121,7 @@ for n_signal, signal in enumerate(signals):
                     File.GetLeaf("Jet.Eta").GetValue(j), File.GetLeaf("Jet.Phi").GetValue(j), File.GetLeaf("Jet.Mass").GetValue(j), \
                                                                     File.GetLeaf("Jet.Charge").GetValue(j)
                     jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
+                    print("1 -----", jet_PT)
                     jets.append((jet_charge, jet))
                 elif jet_PT > 30 and np.abs(jet_Eta) < 2.4 and BTag == 1:
                     num_b_jets += 1
@@ -161,7 +162,9 @@ for n_signal, signal in enumerate(signals):
                 # Estos son los dos tau de mayor pT.
                 tau1, tau2 = jets[0][1], jets[1][1]
                 plot_PT_tau1.Fill(tau1.Pt())
+                print("2 -----", tau1.Pt())
                 plot_PT_tau2.Fill(tau2.Pt())
+                print("3 -----", tau2.Pt())
                 # Tomamos los taus que satisfagan el corte. Cada uno es un TLorentzVector.
                 taus_cut, cut = tau_cuts(jets, METs[0].Pt())
                 if cut:
