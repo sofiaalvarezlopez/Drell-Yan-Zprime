@@ -122,6 +122,8 @@ for n_signal, signal in enumerate(signals):
                                                                     File.GetLeaf("Jet.Charge").GetValue(j)
                     jet.SetPtEtaPhiM(jet_PT, jet_Eta, jet_Phi, jet_M)
                     print("1 -----", jet_PT)
+                    print("eta", jet_Eta)
+                    print("tau tag", TauTag)
                     jets.append((jet_charge, jet))
                 elif jet_PT > 30 and np.abs(jet_Eta) < 2.4 and BTag == 1:
                     num_b_jets += 1
