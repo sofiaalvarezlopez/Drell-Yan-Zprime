@@ -31,12 +31,12 @@ void merge_histos()
 
 
     vector<std::string> x_labels {"cos(#Delta #phi (#tau_{1}, #tau_{2})) [a.u.]", "cos(#Delta #phi (MET, #tau_{1})) [a.u.]", "cos(#Delta #phi (MET, #tau_{2})) [a.u.]", "#Delta p_{T} (#tau_{1}, #tau_{2}) [GeV]",
-    "#Delta #phi (#tau_{1}, #tau_{2}) [a.u.]", "#Delta #eta (#tau_{1}, #tau_{2}) [a.u.]", "#Delta R (#tau_{1}, #tau_{2}) [a.u]", "p_{T}(#tau_{1}) [GeV]", "p_{T}(#tau_{2}) [GeV]", "#eta(#tau) [GeV]", "#phi(#tau) [a.u.]", "p(#tau_{1}) [GeV]", "p(#tau_{2}) [GeV]"};
+    "#Delta #phi (#tau_{1}, #tau_{2}) [a.u.]", "#Delta #eta (#tau_{1}, #tau_{2}) [a.u.]", "#Delta R (#tau_{1}, #tau_{2}) [a.u]", "p_{T}(#tau_{1}) [GeV]", "p_{T}(#tau_{2}) [GeV]", "#eta(#tau) [a.u.]", "#phi(#tau) [a.u.]", "p(#tau_{1}) [GeV]", "p(#tau_{2}) [GeV]"};
 
 
     //vector<int> colors {3, 7, 6, 5, 2, 4, 8, 9, 1, 43, 97, 38};
     //vector<int> colors {3, 7, 6, 4, 2};
-    vector<int> colors {6, 7, 2, 4, 3, 5, 1, 97, 63};
+    vector<int> colors {6, 7, 2, 4, 3, 5, 1, 63, 208};
 
     //vector<int> linestyles {1, 1, 1, 1, 10, 9, 8, 7, 6, 5, 4, 3};
     //vector<int> linestyles {1, 1, 1, 1, 1};
@@ -83,12 +83,15 @@ void merge_histos()
             {  
               h->SetLineColor(colors[j]);
               h->SetLineStyle(linestyles[j]);
-              h->SetLineWidth(3);
+              h->SetLineWidth(5);
             }
             else
             {
               h->SetFillColor(colors[j]);
               h->SetFillStyle(3001);
+              //h->SetLineColor(colors[j]);
+              //h->SetLineStyle(linestyles[j]);
+              //h->SetLineWidth(3);
               //h->SetFillColorAlpha(colors[j], 0.7);
               h->SetLineColor(0);
             }
@@ -121,7 +124,7 @@ void merge_histos()
 
         hs->Draw("NOSTACK HIST");
         hs->GetXaxis()->SetTitle(x_labels[i].c_str());
-        hs->GetYaxis()->SetTitle("a.u.");
+        hs->GetYaxis()->SetTitle("Num. Eventos (normalizados a la unidad) [a.u.]");
         legend->Draw();
         l->Add(c2);
         std::string filename = plots[i] + ".png";
